@@ -1,0 +1,408 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>FoodNearU - Gợi ý món ăn cho sinh viên</title>
+    <style>
+        :root {
+            --primary-color: #ff6f61;
+            --bg-color: #fff8f0;
+            --text-color: #333;
+            --card-bg: #fff;
+            --shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            --radius: 12px;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-color);
+        }
+
+        .container {
+            max-width: 1100px;
+            margin: auto;
+            padding: 20px;
+        }
+
+        header {
+            background-color: var(--primary-color);
+            color: white;
+            padding: 20px 0;
+            box-shadow: var(--shadow);
+            position: relative;
+        }
+
+        header h1 {
+            text-align: center;
+            font-size: 2rem;
+        }
+
+        nav {
+            margin-top: 10px;
+            text-align: center;
+        }
+
+        nav ul {
+            display: inline-flex;
+            list-style: none;
+            gap: 30px;
+        }
+
+        nav a {
+            color: white;
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        nav a:hover {
+            text-decoration: underline;
+        }
+
+        /* Ô tìm kiếm */
+        .search-container {
+            display: flex;
+            justify-content: center;
+            margin-top: 15px;
+        }
+
+        .search-container input[type="search"] {
+            width: 300px;
+            padding: 8px 12px;
+            border: none;
+            border-radius: var(--radius);
+            font-size: 1rem;
+        }
+
+        .search-container button {
+            padding: 8px 12px;
+            background-color: #e2584b;
+            border: none;
+            color: white;
+            border-radius: var(--radius);
+            margin-left: 10px;
+            cursor: pointer;
+            transition: background 0.3s ease;
+            font-size: 1rem;
+        }
+
+        .search-container button:hover {
+            background-color: #c14f40;
+        }
+
+        .hero {
+            text-align: center;
+            padding: 50px 20px;
+        }
+
+        .hero h2 {
+            font-size: 2.2rem;
+            margin-bottom: 10px;
+        }
+
+        .hero p {
+            font-size: 1.1rem;
+            margin-bottom: 20px;
+        }
+
+        .hero button {
+            background-color: var(--primary-color);
+            color: white;
+            padding: 12px 24px;
+            border: none;
+            border-radius: var(--radius);
+            font-size: 1rem;
+            cursor: pointer;
+            transition: background 0.3s ease;
+        }
+
+        .hero button:hover {
+            background-color: #e2584b;
+        }
+
+        .section {
+            margin: 40px 0;
+        }
+
+        .section h3 {
+            font-size: 1.8rem;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+        }
+
+        .card {
+            background-color: var(--card-bg);
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+            overflow: hidden;
+            transition: transform 0.3s ease;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+        }
+
+        /* Phần dành cho "Gợi ý hôm nay" dùng overlay trên ảnh */
+        .image-container {
+            position: relative;
+        }
+
+        .image-container img {
+            width: 100%;
+            height: 180px;
+            object-fit: cover;
+            display: block;
+        }
+
+        .slogan-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            padding: 8px 12px;
+            background: rgba(255, 111, 97, 0.9);
+            color: white;
+            font-size: 1.1rem;
+            font-weight: bold;
+            text-align: center;
+            border-bottom-left-radius: var(--radius);
+            border-bottom-right-radius: var(--radius);
+        }
+
+        /* Phần dành cho ảnh ở các section không có overlay */
+        .image-container-no-overlay {
+            width: 100%;
+        }
+
+        .image-container-no-overlay img {
+            width: 100%;
+            height: 180px;
+            max-height: 180px;
+            object-fit: cover;
+            display: block;
+        }
+
+        .card-content {
+            padding: 15px;
+        }
+
+        .card-content h4 {
+            font-size: 1.2rem;
+            margin-bottom: 6px;
+        }
+
+        .card-content p {
+            font-size: 0.95rem;
+            color: #555;
+        }
+
+        /* Nếu cần slogan bên dưới nội dung (vd: ở phần Món ăn phổ biến) */
+        .slogan {
+            font-size: 0.9rem;
+            color: var(--primary-color);
+            font-style: italic;
+            margin-top: 5px;
+        }
+
+        .review {
+            background-color: var(--card-bg);
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+            padding: 20px;
+        }
+
+        .review p {
+            margin-bottom: 12px;
+        }
+
+        footer {
+            text-align: center;
+            padding: 20px 0;
+            background-color: #eee;
+            font-size: 0.9rem;
+            margin-top: 40px;
+        }
+
+        @media (max-width: 600px) {
+            .hero h2 {
+                font-size: 1.6rem;
+            }
+
+            .search-container input[type="search"] {
+                width: 80%;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <div class="container">
+            <h1>🍜 FoodNearU</h1>
+            <div class="search-container">
+                <input type="search" placeholder="Tìm món ăn, quán ăn..." />
+                <button type="button">Tìm kiếm</button>
+            </div>
+            <nav>
+                <ul>
+                    <li><a href="#suggest">Đề xuất</a></li>
+                    <li><a href="#restaurants">Quán ăn</a></li>
+                    <li><a href="#dishes">Món ăn</a></li>
+                    <li><a href="#reviews">Đánh giá</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <main class="container">
+        <section class="hero">
+            <h2>Khám phá món ngon gần trường 🎓</h2>
+            <p>Dành riêng cho sinh viên bận rộn – chọn món ăn ngon, nhanh, gần!</p>
+            <button>Bắt đầu khám phá</button>
+        </section>
+
+        <!-- Phần "Gợi ý hôm nay" với overlay slogan -->
+        <section id="suggest" class="section">
+            <h3>🔍 Gợi ý hôm nay</h3>
+            <div class="grid">
+                <!-- Card món ăn 1 -->
+                <div class="card">
+                    <div class="image-container">
+                        <img src="./image/ex3.jpg" alt="Gà rán cay" />
+                        <div class="slogan-overlay">GIÒN RỤM & CAY NÓNG</div>
+                    </div>
+                    <div class="card-content">
+                        <h4>Gà rán cay</h4>
+                        <p>Gà Sài Gòn · 4.7⭐ · 350m</p>
+                    </div>
+                </div>
+                <!-- Card món ăn 2 -->
+                <div class="card">
+                    <div class="image-container">
+                        <img src="./image/ex6.jpg" alt="Phở bò tái" />
+                        <div class="slogan-overlay">NÓNG HỔI & TRUYỀN THỐNG!</div>
+                    </div>
+                    <div class="card-content">
+                        <h4>Phở bò tái</h4>
+                        <p>Phở Hà Nội · 4.5⭐ · 450m</p>
+                    </div>
+                </div>
+                <!-- Card món ăn 3 -->
+                <div class="card">
+                    <div class="image-container">
+                        <img src="./image/ex5.jpg" alt="Bánh cuốn thịt nướng" />
+                        <div class="slogan-overlay">THANH ĐẠM & DỄ ĂN</div>
+                    </div>
+                    <div class="card-content">
+                        <h4>Bánh cuốn thịt nướng</h4>
+                        <p>Quán Bánh Cuốn · 4.6⭐ · 400m</p>
+                    </div>
+                </div>
+                <!-- Card món ăn 4 -->
+                <div class="card">
+                    <div class="image-container">
+                        <img src="./image/ex6.jpg" alt="Bánh mì thịt quay" />
+                        <div class="slogan-overlay">GIÁ RẺ, NHANH GỌN & TIỆN LỢI</div>
+                    </div>
+                    <div class="card-content">
+                        <h4>Bánh mì thịt quay</h4>
+                        <p>FreshBerry · 4.4⭐ · 300m</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Phần "Món ăn phổ biến" không dùng overlay -->
+        <section id="dishes" class="section">
+            <h3>🍲 Món ăn phổ biến</h3>
+            <div class="grid">
+                <div class="card">
+                    <div class="image-container-no-overlay">
+                        <img src="./image/ex8.jpg" alt="Bún bò Huế" />
+                    </div>
+                    <div class="card-content">
+                        <h4>Bún bò Huế</h4>
+                        <p>Huế Delights · 4.6⭐ · 400m</p>
+                        <p class="slogan">Hương vị đậm đà, là lựa chọn tuyệt vời cho tín đồ phở!</p>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="image-container-no-overlay">
+                        <img src="./image/ex.jpg" alt="Bánh mì chảo" />
+                    </div>
+                    <div class="card-content">
+                        <h4>Bánh mì chảo</h4>
+                        <p>Bánh mì Xuyên Quang · 4.4⭐ · 300m</p>
+                        <p class="slogan">Nhanh gọn và vừa miệng – cho bữa trưa của bạn thêm hứng khởi!</p>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="image-container-no-overlay">
+                        <img src="./image/ex4.jpg" alt="Cơm tấm sườn bì chả" />
+                    </div>
+                    <div class="card-content">
+                        <h4>Cơm tấm sườn bì chả</h4>
+                        <p>Quán Cô Ba · 4.5⭐ · 500m</p>
+                        <p class="slogan">Đủ chất, ngon miệng – lý tưởng cho bữa trưa tiết kiệm nhưng chất lượng!</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Phần "Quán ăn nổi bật" không dùng overlay -->
+        <section id="restaurants" class="section">
+            <h3>🏠 Quán ăn nổi bật</h3>
+            <div class="grid">
+                <div class="card">
+                    <div class="image-container-no-overlay">
+                        <img src="https://images.unsplash.com/photo-1565299624946-b28f40a0ae38" alt="Quán chị Thảo" />
+                    </div>
+                    <div class="card-content">
+                        <h4>Quán Chị Thảo</h4>
+                        <p>Đặc sản bún đậu - Giá rẻ, phục vụ nhanh</p>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="image-container-no-overlay">
+                        <img src="https://images.unsplash.com/photo-1550547660-d9450f859349" alt="Gà Sài Gòn" />
+                    </div>
+                    <div class="card-content">
+                        <h4>Gà Sài Gòn</h4>
+                        <p>Chuyên đồ chiên - Siêu giòn cay!</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="reviews" class="section">
+            <h3>💬 Đánh giá gần đây</h3>
+            <div class="review">
+                <p><strong>Nam:</strong> Gà rán cay ở Gà Sài Gòn thật sự khiến tôi “trỗi dậy” khi nhắc đến món ăn nóng
+                    hổi!</p>
+                <p><strong>Trang:</strong> Phở bò tái ở Phở Hà Nội vừa thơm vừa đậm đà, đúng chất ẩm thực đường phố.</p>
+                <p><strong>Minh:</strong> Bánh mì chảo đã cứu lấy buổi trưa bận rộn của tôi – nhanh gọn và ngon miệng!
+                </p>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; 2025 FoodNearU. Made for students ❤️</p>
+    </footer>
+</body>
+
+</html>
