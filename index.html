@@ -280,7 +280,7 @@
             <h3>🔍 Gợi ý hôm nay</h3>
             <div class="grid">
                 <!-- Card món ăn 1 -->
-                <div class="card">
+                <div class="card" onclick="goToDetailPage('ga-ran-cay')">
                     <div class="image-container">
                         <img src="./image/ex3.jpg" alt="Gà rán cay" />
                         <div class="slogan-overlay">GIÒN RỤM & CAY NÓNG</div>
@@ -291,7 +291,7 @@
                     </div>
                 </div>
                 <!-- Card món ăn 2 -->
-                <div class="card">
+                <div class="card" onclick="goToDetailPage('pho-bo-tai')">
                     <div class="image-container">
                         <img src="./image/ex6.jpg" alt="Phở bò tái" />
                         <div class="slogan-overlay">NÓNG HỔI & TRUYỀN THỐNG!</div>
@@ -302,7 +302,7 @@
                     </div>
                 </div>
                 <!-- Card món ăn 3 -->
-                <div class="card">
+                <div class="card" onclick="goToDetailPage('banh-cuon-thit-nuong')">
                     <div class="image-container">
                         <img src="./image/ex5.jpg" alt="Bánh cuốn thịt nướng" />
                         <div class="slogan-overlay">THANH ĐẠM & DỄ ĂN</div>
@@ -313,7 +313,7 @@
                     </div>
                 </div>
                 <!-- Card món ăn 4 -->
-                <div class="card">
+                <div class="card" onclick="goToDetailPage('banh-mi-thit-quay')">
                     <div class="image-container">
                         <img src="./image/ex6.jpg" alt="Bánh mì thịt quay" />
                         <div class="slogan-overlay">GIÁ RẺ, NHANH GỌN & TIỆN LỢI</div>
@@ -404,5 +404,11 @@
         <p>&copy; 2025 FoodNearU. Made for students ❤️</p>
     </footer>
 </body>
+
+<script>
+    function goToDetailPage(foodId) {
+        window.location.href = `detail.html?id=${foodId}`;
+    }
+</script>
 
 </html>

@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+    <meta charset="UTF-8" />
+    <title>Chi tiết món ăn</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', sans-serif;
+            padding: 20px;
+            background-color: #fff8f0;
+            color: #333;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: auto;
+        }
+
+        .food-image {
+            width: 100%;
+            height: 300px;
+            object-fit: cover;
+            border-radius: 12px;
+        }
+
+        .info {
+            margin-top: 20px;
+        }
+
+        .info h2 {
+            font-size: 2rem;
+            margin-bottom: 10px;
+        }
+
+        .info p {
+            margin: 6px 0;
+            font-size: 1.1rem;
+        }
+
+        .back {
+            display: inline-block;
+            margin-top: 20px;
+            text-decoration: none;
+            color: #ff6f61;
+            font-weight: bold;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <img id="food-image" class="food-image" src="" alt="Hình ảnh món ăn">
+        <div class="info">
+            <h2 id="food-name"></h2>
+            <p><strong>Giá:</strong> <span id="food-price"></span></p>
+            <p><strong>Thông tin:</strong> <span id="food-info"></span></p>
+            <p><strong>Đánh giá:</strong> <span id="food-rating"></span></p>
+            <p><strong>Khoảng cách:</strong> <span id="food-distance"></span></p>
+        </div>
+        <a class="back" href="index.html">← Quay lại</a>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+
+</html>
